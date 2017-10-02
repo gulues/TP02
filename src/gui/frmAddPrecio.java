@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,6 +13,7 @@ import javax.swing.UIManager;
 
 public class frmAddPrecio extends JFrame {
 
+	private static final long serialVersionUID = 6661227783988811244L;
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtHabitantes;
@@ -88,6 +88,7 @@ public class frmAddPrecio extends JFrame {
 		contentPane.add(txtNombre);
 		txtNombre.setColumns(10);
 		
+		@SuppressWarnings("rawtypes")
 		JComboBox cmbPcia = new JComboBox();
 		cmbPcia.setBounds(139, 46, 200, 20);
 		contentPane.add(cmbPcia);

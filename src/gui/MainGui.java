@@ -1,15 +1,11 @@
 package gui;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JLabel;
 
 import java.awt.BasicStroke;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Stroke;
 
 import javax.swing.JFrame;
@@ -23,38 +19,30 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Line2D;
-import java.util.Locale;
 
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
-import org.openstreetmap.gui.jmapviewer.JMapViewer.ZOOM_BUTTON_STYLE;
+
+
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.JSplitPane;
 import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 
 public class MainGui extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel[] ciudad = new JLabel[100];
-	private int indice = 0;
 	private JPanel panelContenedor;
-	private JPanel contentPane;
-	private int posX;
-	private int posY;
+	private JPanel contentPane;;
 	private static boolean addRuta = false;
 	private JTable table;
-	private static Point select = new Point(-1, -1);
 	private static DefaultTableModel modeloTabla;
 	private JTextField textField;
 
@@ -112,91 +100,12 @@ public class MainGui extends JFrame {
 		JButton btnNewButton = new JButton("Agregar Ciudad");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmAddPrecio fnew= new frmAddPrecio();
-				fnew.show();
+				frmAddCiudad fnew= new frmAddCiudad();
+				fnew.setVisible(true);
 			}
 		});
-		btnNewButton.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent arg0) {
-//
-//				ciudad[indice] = new JLabel() {
-//					private static final long serialVersionUID = 1L;
-//
-//					public void paint(Graphics g) {
-//						super.paint(g);
-//						double width = this.getSize().getWidth();
-//						double height = this.getSize().getHeight();
-//						g.setColor(Color.red);
-//						for (int i = 0; i < width; i += height) {
-//							g.drawOval(i, 0, 40, 40);
-//
-//						}
-//					}
-//				};
-//				ciudad[indice].setVisible(true);
-//				ciudad[indice].setAlignmentX(CENTER_ALIGNMENT);
-//				ciudad[indice].setAlignmentY(BOTTOM_ALIGNMENT);
-//				;
-//				ciudad[indice].setText("    " + indice);
-//				ciudad[indice].setFont(new Font("Tahoma", Font.BOLD, 15));
-//				if (indice != 0)
-//					ciudad[indice].setBounds(0, ciudad[indice - 1].getY() + 50,
-//							50, 50);
-//				else
-//					ciudad[indice].setBounds(0, 0, 50, 50);
-//
-//				addActionListener(indice);
-//				panelContenedor.add(ciudad[indice++]);
-//				repaint();
-//
-//			}
 
-			private void addActionListener(int indice) {
-				ciudad[indice].addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent e) {
-						if (addRuta) {
-
-							if (select.x == -1)
-								select.x = indice;
-							else {
-								select.y = indice;
-								addRuta = false;
-							}
-							if (select.x != -1 && select.y != -1) {
-
-								String[] arreglo = new String[2];
-								arreglo[0] = select.x + "";
-								arreglo[1] = select.y + "";
-								modeloTabla.addRow(arreglo);
-
-								drawline(ciudad[select.x].getX(),
-										ciudad[select.x].getY(),
-										ciudad[select.y].getX(),
-										ciudad[select.y].getY());
-								select.x = -1;
-								select.y = -1;
-
-							}
-						}
-					}
-
-				});
-
-				ciudad[indice].addMouseMotionListener(new MouseAdapter() {
-					public void mouseDragged(MouseEvent e) {
-						posX = ciudad[indice].getX() + e.getX()
-								- (ciudad[indice].getWidth() / 2);
-						posY = ciudad[indice].getY() + e.getY()
-								- (ciudad[indice].getHeight() / 2);
-						ciudad[indice].setBounds(posX, posY, 50, 50);
-
-					}
-				});
-
-			}
-		});
+		
 
 		btnNewButton.setBounds(10, 11, 117, 23);
 		panelBotones.add(btnNewButton);
@@ -243,6 +152,7 @@ public class MainGui extends JFrame {
 		label.setBounds(10, 84, 58, 14);
 		panelBotones.add(label);
 
+		@SuppressWarnings("rawtypes")
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(82, 81, 45, 20);
 		panelBotones.add(comboBox);
@@ -250,7 +160,7 @@ public class MainGui extends JFrame {
 		JLabel label_1 = new JLabel("Hasta:");
 		label_1.setBounds(10, 115, 34, 17);
 		panelBotones.add(label_1);
-
+		@SuppressWarnings("rawtypes")
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(82, 112, 45, 20);
 		panelBotones.add(comboBox_1);
@@ -280,6 +190,7 @@ public class MainGui extends JFrame {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void drawline(double x1, double y1, double x2, double y2) {
 		Graphics g = getGraphics();
 		Graphics2D ga = (Graphics2D) g;
