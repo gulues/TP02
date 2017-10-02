@@ -1,9 +1,14 @@
 package grafos;
 
 public class GrafoPesado {
+	@SuppressWarnings("unused")
+	private Grafo grafo;
+	@SuppressWarnings("unused")
+	private int peso;
 
 	public GrafoPesado(int i) {
-		// TODO Auto-generated constructor stub
+		grafo= new Grafo(i);
+		
 	}
 
 	public int cantidadVertices() {
@@ -17,7 +22,7 @@ public class GrafoPesado {
 	}
 
 	public void agregarArista(int i, int j, int k) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
