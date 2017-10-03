@@ -1,6 +1,6 @@
 package gui;
 
-import javax.swing.JLabel;
+
 
 import java.awt.BasicStroke;
 import java.awt.EventQueue;
@@ -24,8 +24,6 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.Line2D;
 
 import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
 
 
 
@@ -44,7 +42,6 @@ public class MainGui extends JFrame {
 	private static boolean addRuta = false;
 	private JTable table;
 	private static DefaultTableModel modeloTabla;
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -107,21 +104,18 @@ public class MainGui extends JFrame {
 
 		
 
-		btnNewButton.setBounds(10, 11, 117, 23);
+		btnNewButton.setBounds(10, 11, 132, 34);
 		panelBotones.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Agregar Ruta");
+		JButton btnNewButton_1 = new JButton("Configurar Costos");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addRuta = !addRuta;
+				frmAddPrecio newForm= new frmAddPrecio();
+				newForm.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(10, 174, 117, 23);
+		btnNewButton_1.setBounds(10, 64, 132, 34);
 		panelBotones.add(btnNewButton_1);
-
-		JButton btnNewButton_2 = new JButton("New button");
-		btnNewButton_2.setBounds(10, 208, 117, 23);
-		panelBotones.add(btnNewButton_2);
 
 		table = new JTable();
 		// Tabla Socios
@@ -142,44 +136,14 @@ public class MainGui extends JFrame {
 		table.setBounds(25, 332, 103, -141);
 		// panel.add(srollTabla);
 		panelBotones.add(scrollTabla);
-
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(82, 143, 44, 20);
-		panelBotones.add(textField);
-
-		JLabel label = new JLabel("Desde:");
-		label.setBounds(10, 84, 58, 14);
-		panelBotones.add(label);
-
-		@SuppressWarnings("rawtypes")
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(82, 81, 45, 20);
-		panelBotones.add(comboBox);
-
-		JLabel label_1 = new JLabel("Hasta:");
-		label_1.setBounds(10, 115, 34, 17);
-		panelBotones.add(label_1);
-		@SuppressWarnings("rawtypes")
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(82, 112, 45, 20);
-		panelBotones.add(comboBox_1);
-
-		JLabel label_2 = new JLabel("Distancia:");
-		label_2.setBounds(10, 146, 58, 17);
-		panelBotones.add(label_2);
-
-		JLabel lblRutas = new JLabel("Rutas:");
-		lblRutas.setBounds(10, 56, 58, 14);
-		panelBotones.add(lblRutas);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(176, 11, 1157, 700);
+		panel.setBounds(176, 11, 1186, 704);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
 		panelContenedor = new JPanel();
-		panelContenedor.setBounds(0, 0, 950, 700);
+		panelContenedor.setBounds(0, 0, 1147, 700);
 		panel.add(panelContenedor);
 
 		panelContenedor.setBackground(Color.WHITE);
