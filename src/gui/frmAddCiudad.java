@@ -139,7 +139,7 @@ public class frmAddCiudad extends JFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				MainGui.mostrarCiudades(arrayCiudades);
 			}
 		});
 		btnAceptar.setBounds(66, 501, 130, 57);

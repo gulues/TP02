@@ -28,19 +28,24 @@ import javax.swing.JTable;
 
 
 
+
+
+import ciudades.ciudad;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.FlowLayout;
+import java.util.ArrayList;
+
+import javax.swing.JLabel;
 
 public class MainGui extends JFrame {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	private JPanel panelContenedor;
+	private static JPanel panelContenedor;
 	private JPanel contentPane;;
 	private JTable table;
 	private static DefaultTableModel modeloTabla;
+	private static JLabel[] lblCiudades;
 
 	/**
 	 * Launch the application.
@@ -146,9 +151,11 @@ public class MainGui extends JFrame {
 		panel.add(panelContenedor);
 
 		panelContenedor.setBackground(Color.WHITE);
-		FlowLayout fl_panelContenedor = new FlowLayout(FlowLayout.CENTER, 5, 5);
-		fl_panelContenedor.setAlignOnBaseline(true);
-		panelContenedor.setLayout(fl_panelContenedor);
+		panelContenedor.setLayout(null);
+		
+		
+		//lblCiudad.setBounds(0, 0, 46, 14);
+		
 		
 
 	}
@@ -166,5 +173,21 @@ public class MainGui extends JFrame {
 				(int) y2 + 61));
 		// ga.drawLine((int)x1+196, (int)y1+61, (int)x2+196,(int) y2+61);
 
+	}
+
+	public static void mostrarCiudades(ArrayList<ciudad> arrayCiudades) {
+		int i=0;
+		int x;
+		int y;
+		lblCiudades= new JLabel[arrayCiudades.size()];
+		for (ciudad ciudad : arrayCiudades) {
+			y=ciudad.getLatitud();
+			x=ciudad.getLongitud();
+			lblCiudades[i].setBounds(x, y, 100, 100);
+			lblCiudades[i].setText(ciudad.get_nombre());
+			lblCiudades[i].setVisible(true);
+			panelContenedor.add(lblCiudades[i++]);
+		}
+		
 	}
 }
