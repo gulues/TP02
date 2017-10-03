@@ -39,7 +39,6 @@ public class MainGui extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel panelContenedor;
 	private JPanel contentPane;;
-	private static boolean addRuta = false;
 	private JTable table;
 	private static DefaultTableModel modeloTabla;
 

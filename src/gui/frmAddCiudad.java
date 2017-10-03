@@ -11,7 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import ciudades.ciudad;
 
@@ -41,7 +40,7 @@ public class frmAddCiudad extends JFrame {
 		}
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 451, 604);
+		setBounds(100, 100, 451, 598);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,23 +48,23 @@ public class frmAddCiudad extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblNombre = new JLabel("Localidad:");
-		lblNombre.setBounds(10, 31, 75, 20);
+		lblNombre.setBounds(10, 42, 75, 20);
 		contentPane.add(lblNombre);
 
 		JLabel lblProvincia = new JLabel("Provincia:");
-		lblProvincia.setBounds(10, 66, 75, 20);
+		lblProvincia.setBounds(10, 77, 75, 20);
 		contentPane.add(lblProvincia);
 
 		JLabel lblCantidadDeHabitantes = new JLabel("Cantidad de Habitantes:");
-		lblCantidadDeHabitantes.setBounds(10, 105, 117, 20);
+		lblCantidadDeHabitantes.setBounds(10, 116, 117, 20);
 		contentPane.add(lblCantidadDeHabitantes);
 
 		JLabel lblLatitud = new JLabel("Latitud:");
-		lblLatitud.setBounds(10, 151, 75, 20);
+		lblLatitud.setBounds(66, 162, 75, 20);
 		contentPane.add(lblLatitud);
 
 		JLabel lblLongitud = new JLabel("Longitud:");
-		lblLongitud.setBounds(149, 151, 75, 20);
+		lblLongitud.setBounds(227, 162, 75, 20);
 		contentPane.add(lblLongitud);
 
 		JButton btnOk = new JButton("Agregar Ciudad");
@@ -80,34 +79,34 @@ public class frmAddCiudad extends JFrame {
 
 			}
 		});
-		btnOk.setBounds(105, 174, 117, 56);
+		btnOk.setBounds(104, 196, 117, 56);
 		contentPane.add(btnOk);
 
 		JButton btnCerrar = new JButton("Cerrar");
-		btnCerrar.setBounds(236, 174, 117, 56);
+		btnCerrar.setBounds(232, 196, 117, 56);
 		contentPane.add(btnCerrar);
 
 		txtLocalidad = new JTextField();
-		txtLocalidad.setBounds(139, 31, 200, 20);
+		txtLocalidad.setBounds(139, 42, 200, 20);
 		contentPane.add(txtLocalidad);
 		txtLocalidad.setColumns(10);
 
-		txtPcia.setBounds(139, 66, 200, 20);
+		txtPcia.setBounds(139, 77, 200, 20);
 		contentPane.add(txtPcia);
 
 		txtHabitantes = new JTextField();
 		txtHabitantes.setColumns(10);
-		txtHabitantes.setBounds(139, 105, 200, 20);
+		txtHabitantes.setBounds(139, 116, 200, 20);
 		contentPane.add(txtHabitantes);
 
 		txtLat = new JTextField();
 		txtLat.setColumns(10);
-		txtLat.setBounds(63, 151, 57, 20);
+		txtLat.setBounds(139, 162, 57, 20);
 		contentPane.add(txtLat);
 
 		txtLon = new JTextField();
 		txtLon.setColumns(10);
-		txtLon.setBounds(204, 151, 57, 20);
+		txtLon.setBounds(282, 162, 57, 20);
 		contentPane.add(txtLon);
 
 		JScrollPane scrollTabla = new JScrollPane();
@@ -119,22 +118,13 @@ public class frmAddCiudad extends JFrame {
 		contentPane.add(scrollTabla);
 
 		JLabel label = new JLabel("Nombre:");
-		label.setBounds(10, 0, 75, 20);
+		label.setBounds(10, 11, 75, 20);
 		contentPane.add(label);
 
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
-		txtNombre.setBounds(139, 0, 200, 20);
+		txtNombre.setBounds(139, 11, 200, 20);
 		contentPane.add(txtNombre);
-
-		tblCiudades = new JTable((TableModel) null);
-		tblCiudades.setFillsViewportHeight(true);
-
-	
-		scrollTabla.setViewportView(tblCiudades);
-		tblCiudades = new JTable(mdlCiudades);
-		tblCiudades.setFillsViewportHeight(true);
-		scrollTabla.setViewportView(tblCiudades);
 		mdlCiudades = new DefaultTableModel();
 		mdlCiudades.addColumn("Nombre");
 		mdlCiudades.addColumn("Localidad");
@@ -142,7 +132,26 @@ public class frmAddCiudad extends JFrame {
 		mdlCiudades.addColumn("Cant Hab");
 		mdlCiudades.addColumn("Lat");
 		mdlCiudades.addColumn("Long");
-		scrollTabla.add(tblCiudades);
+		tblCiudades = new JTable(mdlCiudades);
+		tblCiudades.setFillsViewportHeight(true);
+		scrollTabla.setViewportView(tblCiudades);
+		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		btnAceptar.setBounds(66, 501, 130, 57);
+		contentPane.add(btnAceptar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(251, 501, 130, 57);
+		contentPane.add(btnCancelar);
+		tblCiudades.setDefaultEditor(Object.class, null);
+	
+		
+		
 
 	}
 
