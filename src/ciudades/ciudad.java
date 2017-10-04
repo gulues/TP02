@@ -4,8 +4,8 @@ public class ciudad {
 	private String _nombre;
 	private String _localidad;
 	private String provincia;
-	private int latitud;
-	private int longitud;
+	private double latitud;
+	private double longitud;
 	private int cantidadHabitantes;
 	
 	public ciudad(String _nombre, String _localidad, String provincia,
@@ -50,7 +50,7 @@ public class ciudad {
 		this.provincia = provincia;
 	}
 
-	public int getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
 
@@ -58,7 +58,7 @@ public class ciudad {
 		this.latitud = latitud;
 	}
 
-	public int getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
 

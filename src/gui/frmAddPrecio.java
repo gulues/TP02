@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.UIManager;
+
 
 public class frmAddPrecio extends JFrame {
 
@@ -20,31 +18,6 @@ public class frmAddPrecio extends JFrame {
 	private JTextField txtLat;
 	private JTextField txtLon;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frmAddPrecio frame = new frmAddPrecio();
-					try {
-						UIManager
-								.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public frmAddPrecio() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

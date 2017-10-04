@@ -1,7 +1,6 @@
 package gui;
 
 
-
 import java.awt.BasicStroke;
 import java.awt.EventQueue;
 import java.awt.Graphics;
@@ -25,18 +24,28 @@ import java.awt.geom.Line2D;
 
 import javax.swing.JTable;
 
-
-
-
-
-
 import ciudades.ciudad;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JLabel;
+import org.openstreetmap.gui.jmapviewer.DefaultMapController;
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.interfaces.ICoordinate;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+
+import java.awt.event.MouseEvent;
+
+import org.openstreetmap.gui.jmapviewer.Style;
+
+import java.awt.Font;
+
+import org.openstreetmap.gui.jmapviewer.JMapViewer.ZOOM_BUTTON_STYLE;
+
+import java.awt.BorderLayout;
 
 public class MainGui extends JFrame {
 
@@ -45,7 +54,16 @@ public class MainGui extends JFrame {
 	private JPanel contentPane;;
 	private JTable table;
 	private static DefaultTableModel modeloTabla;
-	private static JLabel[] lblCiudades;
+
+	private static JMapViewer mapa = new JMapViewer();
+	/**
+	 * @wbp.nonvisual location=127,189
+	 */
+	private final Coordinate coordinate = new Coordinate(0.0, 0.0);
+	/**
+	 * @wbp.nonvisual location=54,169
+	 */
+	private final Style style = new Style();
 
 	/**
 	 * Launch the application.
@@ -67,15 +85,10 @@ public class MainGui extends JFrame {
 	 * Create the frame.
 	 */
 	public MainGui() {
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				//mapViewer.setBounds(0, 0, panelContenedor.WIDTH, panelContenedor.HEIGHT);
-				
-				
-			}
-		});
-
+		style.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		style.setColor(Color.RED);
+		coordinate.setLon(-58.6859658);
+		coordinate.setLat(-34.541333);
 		try {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -84,7 +97,7 @@ public class MainGui extends JFrame {
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setBounds(100, 100, 817, 614);
+		// setBounds(100, 100, 817, 614);
 		setExtendedState(MAXIMIZED_BOTH);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -101,12 +114,10 @@ public class MainGui extends JFrame {
 		JButton btnNewButton = new JButton("Agregar Ciudad");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmAddCiudad fnew= new frmAddCiudad();
+				frmAddCiudad fnew = new frmAddCiudad();
 				fnew.setVisible(true);
 			}
 		});
-
-		
 
 		btnNewButton.setBounds(10, 11, 132, 34);
 		panelBotones.add(btnNewButton);
@@ -114,7 +125,7 @@ public class MainGui extends JFrame {
 		JButton btnNewButton_1 = new JButton("Configurar Costos");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frmAddPrecio newForm= new frmAddPrecio();
+				frmAddPrecio newForm = new frmAddPrecio();
 				newForm.setVisible(true);
 			}
 		});
@@ -128,19 +139,57 @@ public class MainGui extends JFrame {
 		scrollTabla.setViewportBorder(new BevelBorder(BevelBorder.LOWERED,
 				null, null, null, null));
 		modeloTabla = new DefaultTableModel();
-		modeloTabla.addColumn("Ruta A");
-		modeloTabla.addColumn("Ruta B");
+		modeloTabla.addColumn("Latitud");
+		modeloTabla.addColumn("Longitud");
+		modeloTabla.addColumn("Localidad");
+		modeloTabla.addColumn("Provincia");
+
 		table = new JTable(modeloTabla);
 		table.setFillsViewportHeight(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setEditingRow(1);
 
 		table.setVisible(true);
+
+		JButton btnDistancias = new JButton("Distancias");
+		btnDistancias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				List<MapMarker> lsts = mapa.getMapMarkerList();
+				boolean band = true;
+				double x1 = 0;
+				double x2 = 0;
+				double y2 = 0;
+				double y1 = 0;
+				for (MapMarker puntos : lsts) {
+					if (band) {
+						x1 = puntos.getLon();
+						y1 = puntos.getLat();
+					} else {
+						x2 = puntos.getLon();
+						y2 = puntos.getLat();
+					}
+					band = !band;
+					
+				}
+				Coordinate c1= new Coordinate(y1, x1);
+				Coordinate c2= new Coordinate(y2, x2);
+				List<Coordinate> route = new ArrayList<Coordinate>();
+				route.add(c1);
+				route.add(c2);
+				route.add(c2);
+				mapa.addMapPolygon(new MapPolygonImpl(route));
+				mapa.repaint();
+				System.out.println(distancia(y1, x1, y2, x2));
+
+			}
+		});
+		btnDistancias.setBounds(10, 120, 132, 34);
+		panelBotones.add(btnDistancias);
 		scrollTabla.setViewportView(table);
 		table.setBounds(25, 332, 103, -141);
 		// panel.add(srollTabla);
 		panelBotones.add(scrollTabla);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(176, 11, 1186, 704);
 		contentPane.add(panel);
@@ -151,12 +200,42 @@ public class MainGui extends JFrame {
 		panel.add(panelContenedor);
 
 		panelContenedor.setBackground(Color.WHITE);
-		panelContenedor.setLayout(null);
-		
-		
-		//lblCiudad.setBounds(0, 0, 46, 14);
-		
-		
+		mapa.setVisible(true);
+		panelContenedor.setLayout(new BorderLayout(0, 0));
+		mapa.setZoomButtonStyle(ZOOM_BUTTON_STYLE.HORIZONTAL);
+		panelContenedor.add(mapa, BorderLayout.CENTER);
+
+		new DefaultMapController(mapa) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String lst[] = new String[4];
+				mapa.getAttribution().handleAttribution(e.getPoint(), true);
+				ICoordinate position = mapa.getPosition(e.getPoint());
+				double x = position.getLon();
+				double y = position.getLat();
+
+				mapa.addMapMarker(new MapMarkerDot(y, x));
+
+				lst[0] = y + "";
+				lst[1] = x + "";
+
+				// lst[3]= (distancia(x,y,));
+				// mapa.addMapMarker(new MapMarkerDot(y,x));
+				// lst[3]=mapa.getLocale().getCountry();
+				modeloTabla.addRow(lst);
+
+			}
+		};
+
+		mapa.setLayout(new BorderLayout());
+		mapa.setAutoscrolls(true);
+		mapa.setZoom(10); // set some zoom level (1-18 are valid)
+		mapa.setDisplayPositionByLatLon(coordinate.getLat(),
+				coordinate.getLon(), 10);
+		mapa.setPreferredSize(null);
+		mapa.setMinimumSize(null);
+		// mapa.addJMVListener((JMapViewerEventListener) this);
+		mapa.repaint(); // if already visible trigger a repaint here
 
 	}
 
@@ -175,19 +254,43 @@ public class MainGui extends JFrame {
 
 	}
 
+	@SuppressWarnings("null")
 	public static void mostrarCiudades(ArrayList<ciudad> arrayCiudades) {
-		int i=0;
-		int x;
-		int y;
-		lblCiudades= new JLabel[arrayCiudades.size()];
-		for (ciudad ciudad : arrayCiudades) {
-			y=ciudad.getLatitud();
-			x=ciudad.getLongitud();
-			lblCiudades[i].setBounds(x, y, 100, 100);
-			lblCiudades[i].setText(ciudad.get_nombre());
-			lblCiudades[i].setVisible(true);
-			panelContenedor.add(lblCiudades[i++]);
-		}
+
+		List<MapMarker> listaCiudades = new ArrayList<MapMarker>();
+		MapMarker punto = null;
 		
+		for (ciudad ciudad : arrayCiudades) {
+			punto.setLon(ciudad.getLongitud());
+			punto.setLat(ciudad.getLatitud());
+			listaCiudades.add(punto);
+		}
+		mapa.setMapMarkerList(listaCiudades);
+		mapa.setDisplayToFitMapMarkers();
+		mapa.repaint();
+
 	}
+	private static double distancia(double lat1, double lon1, double lat2, double lon2) {
+		double theta = lon1 - lon2;
+		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+		dist = dist * 1.609344;
+		return (dist);
+	}
+	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	/*::	This function converts decimal degrees to radians						 :*/
+	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	private static double deg2rad(double deg) {
+		return (deg * Math.PI / 180.0);
+	}
+
+	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	/*::	This function converts radians to decimal degrees						 :*/
+	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	private static double rad2deg(double rad) {
+		return (rad * 180 / Math.PI);
+	}
+
 }
