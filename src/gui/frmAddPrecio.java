@@ -83,8 +83,8 @@ public class frmAddPrecio extends JFrame {
 		
 		JComboBox<String> cmbConexion1 = new JComboBox<String>();
 		for (ciudad ciudad : lista) {
-			cmbConexion1.addItem(ciudad.get_nombre());
-			cmbConexion2.addItem(ciudad.get_nombre());
+			cmbConexion1.addItem(ciudad.get_nombre()+", "+ ciudad.get_localidad()+ ", "+ ciudad.getProvincia());
+			cmbConexion2.addItem(ciudad.get_nombre()+", "+ ciudad.get_localidad()+ ", "+ ciudad.getProvincia());
 		}
 		
 		cmbConexion1.setBounds(180, 11, 200, 20);

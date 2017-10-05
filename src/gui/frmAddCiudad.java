@@ -117,6 +117,10 @@ public class frmAddCiudad extends JFrame {
 					String latLongs[] = getLatLongPositions(txtLocalidad.getText()+", " +txtPcia.getText());
 					txtLat.setText(latLongs[0]);
 					txtLon.setText(latLongs[1]);
+					String[] direccion = latLongs[2].split(", ");
+					txtLocalidad.setText(direccion[0]);
+					txtPcia.setText(direccion[1].replace(" Province", ""));
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -224,11 +228,14 @@ public class frmAddCiudad extends JFrame {
 	      String status = (String)expr.evaluate(document, XPathConstants.STRING);
 	      if(status.equals("OK"))
 	      {
-	         expr = xpath.compile("//geometry/location/lat");
+	         //formatted_address
+	    	  expr = xpath.compile("//formatted_address");
+		     String direccion = (String)expr.evaluate(document, XPathConstants.STRING); 
+	    	 expr = xpath.compile("//geometry/location/lat");
 	         String latitude = (String)expr.evaluate(document, XPathConstants.STRING);
 	         expr = xpath.compile("//geometry/location/lng");
 	         String longitude = (String)expr.evaluate(document, XPathConstants.STRING);
-	         return new String[] {latitude, longitude};
+	         return new String[] {latitude, longitude,direccion};
 	      }
 	      else
 	      {
