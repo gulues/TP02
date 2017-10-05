@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
-import org.openstreetmap.gui.jmapviewer.DefaultMapController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.JMapViewer.ZOOM_BUTTON_STYLE;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
@@ -29,15 +27,16 @@ import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 import ciudades.ciudad;
+import java.awt.Dimension;
 
 public class MainGui extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static JPanel panelContenedor;
-	private JPanel contentPane;;
+	private JPanel contentPane;
 	private JTable table;
 	private static DefaultTableModel modeloTabla;
-
+	public static ArrayList<ciudad> listaCiudades = new ArrayList<ciudad>();
 	private static JMapViewer mapa = new JMapViewer();
 
 	/**
@@ -59,11 +58,14 @@ public class MainGui extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	/**
+	 * 
+	 */
 	public MainGui() {
-		
+		setMinimumSize(new Dimension(800, 600));
+
 		try {
-			UIManager
-					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,9 +79,8 @@ public class MainGui extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JPanel panelBotones = new JPanel();
-		panelBotones.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null,
-				null, null));
-		panelBotones.setBounds(0, 0, 166, 857);
+		panelBotones.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelBotones.setBounds(0, 0, 329, 857);
 		contentPane.add(panelBotones);
 		panelBotones.setLayout(null);
 
@@ -97,7 +98,9 @@ public class MainGui extends JFrame {
 		JButton btnNewButton_1 = new JButton("Configurar Costos");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frmAddPrecio newForm = new frmAddPrecio();
+
+//
+				frmAddPrecio newForm = new frmAddPrecio(listaCiudades);
 				newForm.setVisible(true);
 			}
 		});
@@ -107,9 +110,8 @@ public class MainGui extends JFrame {
 		table = new JTable();
 		// Tabla Socios
 		JScrollPane scrollTabla = new JScrollPane();
-		scrollTabla.setBounds(10, 252, 144, 288);
-		scrollTabla.setViewportBorder(new BevelBorder(BevelBorder.LOWERED,
-				null, null, null, null));
+		scrollTabla.setBounds(10, 252, 309, 288);
+		scrollTabla.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		modeloTabla = new DefaultTableModel();
 		modeloTabla.addColumn("Nombre");
 		modeloTabla.addColumn("Loc");
@@ -163,14 +165,10 @@ public class MainGui extends JFrame {
 		// panel.add(srollTabla);
 		panelBotones.add(scrollTabla);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(176, 11, 1410, 704);
-		contentPane.add(panel);
-		panel.setLayout(null);
-
 		panelContenedor = new JPanel();
-		panelContenedor.setBounds(0, 0, 1147, 700);
-		panel.add(panelContenedor);
+		panelContenedor.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelContenedor.setBounds(330, 0, 1248, 857);
+		contentPane.add(panelContenedor);
 
 		panelContenedor.setBackground(Color.WHITE);
 		mapa.setVisible(true);
@@ -178,22 +176,6 @@ public class MainGui extends JFrame {
 		mapa.setZoomButtonStyle(ZOOM_BUTTON_STYLE.HORIZONTAL);
 		panelContenedor.add(mapa, BorderLayout.CENTER);
 
-		new DefaultMapController(mapa) {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-//				mapa.getAttribution().handleAttribution(e.getPoint(), true);
-//				ICoordinate position = mapa.getPosition(e.getPoint());
-//				double x = position.getLon();
-//				double y = position.getLat();
-//				String lst[] = new String[4];
-//				mapa.addMapMarker(new MapMarkerDot(y, x));
-//				lst[0] = y + "";
-//				lst[1] = x + "";
-//				modeloTabla.addRow(lst);
-
-			}
-		};
 		mapa.setLayout(new BorderLayout());
 		mapa.setAutoscrolls(true);
 		mapa.setZoom(10); // set some zoom level (1-18 are valid)
@@ -203,7 +185,7 @@ public class MainGui extends JFrame {
 
 	}
 
-	@SuppressWarnings("null")
+
 	public static void mostrarCiudades(ArrayList<ciudad> arrayCiudades) {
 		String lst[] = new String[5];
 
@@ -212,19 +194,19 @@ public class MainGui extends JFrame {
 			lst[0] = ciudad.get_nombre();
 			lst[1] = ciudad.get_localidad();
 			lst[2] = ciudad.getProvincia();
-			lst[3] = ciudad.getLatitud()+"";
-			lst[4] = ciudad.getLongitud()+"";
+			lst[3] = ciudad.getLatitud() + "";
+			lst[4] = ciudad.getLongitud() + "";
 			modeloTabla.addRow(lst);
+			listaCiudades.add(ciudad);
+			
 		}
 
 	}
 
-	private static double distancia(double lat1, double lon1, double lat2,
-			double lon2) {
+	private static double distancia(double lat1, double lon1, double lat2, double lon2) {
 		double theta = lon1 - lon2;
 		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
-				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
-				* Math.cos(deg2rad(theta));
+				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
 		dist = Math.acos(dist);
 		dist = rad2deg(dist);
 		dist = dist * 60 * 1.1515;
@@ -245,5 +227,5 @@ public class MainGui extends JFrame {
 	private static double rad2deg(double rad) {
 		return (rad * 180 / Math.PI);
 	}
-	
+
 }
