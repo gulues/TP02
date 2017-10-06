@@ -69,7 +69,7 @@ public class MainGui extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		setTitle("Generador conexiones telefonicas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// setBounds(100, 100, 817, 614);
 		setExtendedState(MAXIMIZED_BOTH);
@@ -100,7 +100,7 @@ public class MainGui extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 //
-				frmAddPrecio newForm = new frmAddPrecio(listaCiudades);
+				frmAddConexion newForm = new frmAddConexion(listaCiudades);
 				newForm.setVisible(true);
 			}
 		});

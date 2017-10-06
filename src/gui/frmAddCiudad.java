@@ -51,6 +51,7 @@ public class frmAddCiudad extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		setTitle("Agregar Ciudad");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 451, 598);
