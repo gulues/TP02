@@ -21,6 +21,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class frmAddConexion extends JFrame {
 
@@ -62,6 +64,15 @@ public class frmAddConexion extends JFrame {
 		final JComboBox<String> cmbConexion1 = new JComboBox<String>();
 		final JComboBox<String> cmbConexion2 = new JComboBox<String>();
 		JButton btnOk = new JButton("Agregar Conexi\u00F3n");
+		btnOk.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int selec1 = cmbConexion1.getSelectedIndex();
+				int selec2 = cmbConexion2.getSelectedIndex();
+				MainGui.dibujarAristas(lista.get(selec1),lista.get(selec2));
+				dispose();
+			}
+		});
 		btnOk.setBounds(77, 286, 127, 56);
 		contentPane.add(btnOk);
 

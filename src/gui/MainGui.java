@@ -129,32 +129,7 @@ public class MainGui extends JFrame {
 		JButton btnDistancias = new JButton("Distancias");
 		btnDistancias.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				List<MapMarker> lsts = mapa.getMapMarkerList();
-				boolean band = true;
-				double x1 = 0;
-				double x2 = 0;
-				double y2 = 0;
-				double y1 = 0;
-				for (MapMarker puntos : lsts) {
-					if (band) {
-						x1 = puntos.getLon();
-						y1 = puntos.getLat();
-					} else {
-						x2 = puntos.getLon();
-						y2 = puntos.getLat();
-					}
-					band = !band;
-
-				}
-				Coordinate c1 = new Coordinate(y1, x1);
-				Coordinate c2 = new Coordinate(y2, x2);
-				List<Coordinate> route = new ArrayList<Coordinate>();
-				route.add(c1);
-				route.add(c2);
-				route.add(c2);
-				mapa.addMapPolygon(new MapPolygonImpl(route));
-				mapa.repaint();
-				System.out.println(distancia(y1, x1, y2, x2));
+				//dibujarAristas();
 
 			}
 		});
@@ -226,6 +201,24 @@ public class MainGui extends JFrame {
 	/* ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: */
 	private static double rad2deg(double rad) {
 		return (rad * 180 / Math.PI);
+	}
+
+	public static void dibujarAristas(ciudad c1, ciudad c2) {
+		double x1 = 0;
+		double x2 = 0;
+		double y2 = 0;
+		double y1 = 0;
+		
+		
+		Coordinate coord1 = new Coordinate(c1.getLatitud(),c1.getLongitud());
+		Coordinate coord2 = new Coordinate(c2.getLatitud(),c2.getLongitud());
+		List<Coordinate> route = new ArrayList<Coordinate>();
+		route.add(coord1);
+		route.add(coord2);
+		route.add(coord2);
+		mapa.addMapPolygon(new MapPolygonImpl(route));
+		mapa.repaint();
+		System.out.println(distancia(y1, x1, y2, x2));
 	}
 
 }
