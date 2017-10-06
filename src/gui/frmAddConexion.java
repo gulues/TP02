@@ -32,6 +32,7 @@ public class frmAddConexion extends JFrame {
 	private JTextField txtCostoPlus;
 	private JTextField txtCostoPciasDif;
 	private double km = 0;
+	@SuppressWarnings("unused")
 	private double costoTotal = 0;
 	private boolean pciasDistintas = false;
 	private JLabel lblCostoTotal;
@@ -46,7 +47,7 @@ public class frmAddConexion extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		costoTotal=0;
 		JLabel lblNombre = new JLabel("Conexi\u00F3n 1");
 		lblNombre.setBounds(10, 11, 117, 20);
 		contentPane.add(lblNombre);
