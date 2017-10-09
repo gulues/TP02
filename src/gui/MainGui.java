@@ -28,14 +28,17 @@ import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
 import ciudades.ciudad;
 import java.awt.Dimension;
+import javax.swing.JLabel;
 
 public class MainGui extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static JPanel panelContenedor;
 	private JPanel contentPane;
-	private JTable table;
-	private static DefaultTableModel modeloTabla;
+	private JTable tblCiudades;
+	private JTable tblConexiones;
+	private static DefaultTableModel mdlTablaCiudades;
+	private static DefaultTableModel mdlTablaConexiones;
 	public static ArrayList<ciudad> listaCiudades = new ArrayList<ciudad>();
 	private static JMapViewer mapa = new JMapViewer();
 
@@ -80,23 +83,23 @@ public class MainGui extends JFrame {
 		contentPane.setLayout(null);
 		JPanel panelBotones = new JPanel();
 		panelBotones.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panelBotones.setBounds(0, 0, 329, 857);
+		panelBotones.setBounds(0, 0, 329, 635);
 		contentPane.add(panelBotones);
 		panelBotones.setLayout(null);
 
-		JButton btnNewButton = new JButton("Agregar Ciudad");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnCiudad = new JButton("Agregar Ciudad");
+		btnCiudad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmAddCiudad fnew = new frmAddCiudad();
 				fnew.setVisible(true);
 			}
 		});
 
-		btnNewButton.setBounds(10, 11, 132, 34);
-		panelBotones.add(btnNewButton);
+		btnCiudad.setBounds(75, 11, 132, 34);
+		panelBotones.add(btnCiudad);
 
-		JButton btnNewButton_1 = new JButton("Configurar Costos");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnConexion = new JButton("Agregar Conexion");
+		btnConexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 //
@@ -104,42 +107,77 @@ public class MainGui extends JFrame {
 				newForm.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(10, 64, 132, 34);
-		panelBotones.add(btnNewButton_1);
+		btnConexion.setBounds(75, 56, 132, 34);
+		panelBotones.add(btnConexion);
 
-		table = new JTable();
-		// Tabla Socios
-		JScrollPane scrollTabla = new JScrollPane();
-		scrollTabla.setBounds(10, 252, 309, 288);
-		scrollTabla.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		modeloTabla = new DefaultTableModel();
-		modeloTabla.addColumn("Nombre");
-		modeloTabla.addColumn("Loc");
-		modeloTabla.addColumn("Pcia");
-		modeloTabla.addColumn("Lat");
-		modeloTabla.addColumn("Lon");
+		// Tabla Ciudades
+		JScrollPane scrTablaCiudades = new JScrollPane();
+		scrTablaCiudades.setBounds(10, 165, 309, 175);
+		scrTablaCiudades.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		mdlTablaCiudades = new DefaultTableModel();
+		mdlTablaCiudades.addColumn("Nombre");
+		mdlTablaCiudades.addColumn("Loc");
+		mdlTablaCiudades.addColumn("Pcia");
+		mdlTablaCiudades.addColumn("Lat");
+		mdlTablaCiudades.addColumn("Lon");
 
-		table = new JTable(modeloTabla);
-		table.setFillsViewportHeight(true);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setEditingRow(1);
+		tblCiudades = new JTable(mdlTablaCiudades);
+		tblCiudades.setFillsViewportHeight(true);
+		tblCiudades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblCiudades.setEditingRow(1);
 
-		table.setVisible(true);
+		tblCiudades.setVisible(true);
 
-		JButton btnDistancias = new JButton("Distancias");
-		btnDistancias.addActionListener(new ActionListener() {
+		// Tabla Conexiones
+				JScrollPane scrTablaConexiones= new JScrollPane();
+				scrTablaConexiones.setBounds(10, 376, 309, 175);
+				scrTablaConexiones.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+				mdlTablaConexiones = new DefaultTableModel();
+				mdlTablaConexiones.addColumn("Nombre");
+				mdlTablaConexiones.addColumn("Loc");
+				mdlTablaConexiones.addColumn("Pcia");
+				mdlTablaConexiones.addColumn("Lat");
+				mdlTablaConexiones.addColumn("Lon");
+
+				tblConexiones = new JTable(mdlTablaConexiones);
+				tblConexiones.setFillsViewportHeight(true);
+				tblConexiones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				tblConexiones.setEditingRow(1);
+
+				tblConexiones.setVisible(true);
+		
+		
+		
+		
+		
+		
+		JButton btnResolucion = new JButton("Resolucion");
+		btnResolucion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//dibujarAristas();
 
 			}
 		});
-		btnDistancias.setBounds(10, 120, 132, 34);
-		panelBotones.add(btnDistancias);
-		scrollTabla.setViewportView(table);
-		table.setBounds(25, 332, 103, -141);
-		// panel.add(srollTabla);
-		panelBotones.add(scrollTabla);
-
+		btnResolucion.setBounds(75, 101, 132, 34);
+		panelBotones.add(btnResolucion);
+		scrTablaCiudades.setViewportView(tblCiudades);
+		scrTablaConexiones.setViewportView(tblConexiones);
+		
+		tblCiudades.setBounds(25, 332, 103, 141);
+		tblConexiones.setBounds(25, 332, 103, 141);
+		
+		JLabel lblCiudades = new JLabel("Ciudades:");
+		lblCiudades.setBounds(10, 140, 101, 14);
+		panelBotones.add(lblCiudades);
+		
+		JLabel lblConexiones = new JLabel("Conexiones");
+		lblConexiones.setBounds(10, 351, 159, 14);
+		panelBotones.add(lblConexiones);
+		
+		panelBotones.add(scrTablaCiudades);
+		panelBotones.add(scrTablaConexiones);
+		
+		
 		panelContenedor = new JPanel();
 		panelContenedor.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelContenedor.setBounds(330, 0, 1248, 857);
@@ -171,7 +209,7 @@ public class MainGui extends JFrame {
 			lst[2] = ciudad.getProvincia();
 			lst[3] = ciudad.getLatitud() + "";
 			lst[4] = ciudad.getLongitud() + "";
-			modeloTabla.addRow(lst);
+			mdlTablaCiudades.addRow(lst);
 			listaCiudades.add(ciudad);
 			
 		}
@@ -220,5 +258,4 @@ public class MainGui extends JFrame {
 		mapa.repaint();
 		System.out.println(distancia(y1, x1, y2, x2));
 	}
-
 }

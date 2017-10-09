@@ -180,13 +180,13 @@ public class frmAddConexion extends JFrame {
 	}
 
 	protected double chkCostoTotal() {
-		Double valor = km * Double.parseDouble(txtCostoKm.getText());
+		costoTotal = km * Double.parseDouble(txtCostoKm.getText());
 		if (km > 200)
-			valor = valor + Double.parseDouble(txtCostoPlus.getText());
+			costoTotal = costoTotal + Double.parseDouble(txtCostoPlus.getText());
 		if (pciasDistintas)
-			valor = valor + Double.parseDouble(txtCostoPciasDif.getText());
-		lblCostoTotal.setText(String.format("Costo Total: $%.0f",valor));
-		return valor;
+			costoTotal = costoTotal + Double.parseDouble(txtCostoPciasDif.getText());
+		lblCostoTotal.setText(String.format("Costo Total: $%.0f",costoTotal));
+		return costoTotal;
 	}
 
 	public String chkCombo(final ArrayList<ciudad> lista, int selec1, int selec2) {
