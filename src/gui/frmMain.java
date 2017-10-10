@@ -30,7 +30,7 @@ import ciudades.ciudad;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 
-public class MainGui extends JFrame {
+public class frmMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static JPanel panelContenedor;
@@ -42,14 +42,11 @@ public class MainGui extends JFrame {
 	public static ArrayList<ciudad> listaCiudades = new ArrayList<ciudad>();
 	private static JMapViewer mapa = new JMapViewer();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainGui frame = new MainGui();
+					frmMain frame = new frmMain();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,13 +55,7 @@ public class MainGui extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	/**
-	 * 
-	 */
-	public MainGui() {
+	public frmMain() {
 		setMinimumSize(new Dimension(800, 600));
 
 		try {
@@ -102,7 +93,7 @@ public class MainGui extends JFrame {
 		btnConexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-//
+				//
 				frmAddConexion newForm = new frmAddConexion(listaCiudades);
 				newForm.setVisible(true);
 			}
@@ -129,32 +120,26 @@ public class MainGui extends JFrame {
 		tblCiudades.setVisible(true);
 
 		// Tabla Conexiones
-				JScrollPane scrTablaConexiones= new JScrollPane();
-				scrTablaConexiones.setBounds(10, 376, 309, 175);
-				scrTablaConexiones.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-				mdlTablaConexiones = new DefaultTableModel();
-				mdlTablaConexiones.addColumn("Nombre");
-				mdlTablaConexiones.addColumn("Loc");
-				mdlTablaConexiones.addColumn("Pcia");
-				mdlTablaConexiones.addColumn("Lat");
-				mdlTablaConexiones.addColumn("Lon");
+		JScrollPane scrTablaConexiones = new JScrollPane();
+		scrTablaConexiones.setBounds(10, 376, 309, 175);
+		scrTablaConexiones.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		mdlTablaConexiones = new DefaultTableModel();
+		mdlTablaConexiones.addColumn("Ciudad 1");
+		mdlTablaConexiones.addColumn("Ciudad 2");
+		mdlTablaConexiones.addColumn("Distancia Km");
+		mdlTablaConexiones.addColumn("Precio Total");
 
-				tblConexiones = new JTable(mdlTablaConexiones);
-				tblConexiones.setFillsViewportHeight(true);
-				tblConexiones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				tblConexiones.setEditingRow(1);
+		tblConexiones = new JTable(mdlTablaConexiones);
+		tblConexiones.setFillsViewportHeight(true);
+		tblConexiones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblConexiones.setEditingRow(1);
 
-				tblConexiones.setVisible(true);
-		
-		
-		
-		
-		
-		
+		tblConexiones.setVisible(true);
+
 		JButton btnResolucion = new JButton("Resolucion");
 		btnResolucion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//dibujarAristas();
+				// dibujarAristas();
 
 			}
 		});
@@ -162,22 +147,21 @@ public class MainGui extends JFrame {
 		panelBotones.add(btnResolucion);
 		scrTablaCiudades.setViewportView(tblCiudades);
 		scrTablaConexiones.setViewportView(tblConexiones);
-		
+
 		tblCiudades.setBounds(25, 332, 103, 141);
 		tblConexiones.setBounds(25, 332, 103, 141);
-		
+
 		JLabel lblCiudades = new JLabel("Ciudades:");
 		lblCiudades.setBounds(10, 140, 101, 14);
 		panelBotones.add(lblCiudades);
-		
+
 		JLabel lblConexiones = new JLabel("Conexiones");
 		lblConexiones.setBounds(10, 351, 159, 14);
 		panelBotones.add(lblConexiones);
-		
+
 		panelBotones.add(scrTablaCiudades);
 		panelBotones.add(scrTablaConexiones);
-		
-		
+
 		panelContenedor = new JPanel();
 		panelContenedor.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelContenedor.setBounds(330, 0, 1248, 857);
@@ -198,7 +182,6 @@ public class MainGui extends JFrame {
 
 	}
 
-
 	public static void mostrarCiudades(ArrayList<ciudad> arrayCiudades) {
 		String lst[] = new String[5];
 
@@ -211,8 +194,18 @@ public class MainGui extends JFrame {
 			lst[4] = ciudad.getLongitud() + "";
 			mdlTablaCiudades.addRow(lst);
 			listaCiudades.add(ciudad);
-			
+
 		}
+
+	}
+
+	public static void mostrarConexiones(ciudad ciudad1, ciudad ciudad2, double distanciaKm, Double costoTotal) {
+		String lst[] = new String[4];
+		lst[0] = ciudad1.get_nombre() + " - " + ciudad1.get_localidad();
+		lst[1] = ciudad2.get_nombre() + " - " + ciudad2.get_localidad();
+		lst[2] = String.format("%1.2f", distanciaKm);
+		lst[3] = String.format("%1.2f", costoTotal);
+		mdlTablaConexiones.addRow(lst);
 
 	}
 
@@ -224,6 +217,7 @@ public class MainGui extends JFrame {
 		dist = rad2deg(dist);
 		dist = dist * 60 * 1.1515;
 		dist = dist * 1.609344;
+
 		return (dist);
 	}
 
@@ -246,10 +240,9 @@ public class MainGui extends JFrame {
 		double x2 = 0;
 		double y2 = 0;
 		double y1 = 0;
-		
-		
-		Coordinate coord1 = new Coordinate(c1.getLatitud(),c1.getLongitud());
-		Coordinate coord2 = new Coordinate(c2.getLatitud(),c2.getLongitud());
+
+		Coordinate coord1 = new Coordinate(c1.getLatitud(), c1.getLongitud());
+		Coordinate coord2 = new Coordinate(c2.getLatitud(), c2.getLongitud());
 		List<Coordinate> route = new ArrayList<Coordinate>();
 		route.add(coord1);
 		route.add(coord2);

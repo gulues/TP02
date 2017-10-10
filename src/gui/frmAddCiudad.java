@@ -169,14 +169,17 @@ public class frmAddCiudad extends JFrame {
 		mdlCiudades.addColumn("Cant Hab");
 		mdlCiudades.addColumn("Lat");
 		mdlCiudades.addColumn("Long");
+		
+		
 		tblCiudades = new JTable(mdlCiudades);
+		
 		tblCiudades.setFillsViewportHeight(true);
 		scrollTabla.setViewportView(tblCiudades);
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MainGui.mostrarCiudades(arrayCiudades);
+				frmMain.mostrarCiudades(arrayCiudades);
 				dispose();
 			}
 		});
@@ -191,7 +194,6 @@ public class frmAddCiudad extends JFrame {
 	}
 
 	public static void refreshTable(ArrayList<ciudad> listaCiudades) {
-		// Cargar modelo de jugadores
 		for (int i = 0; i < mdlCiudades.getRowCount(); i++) {
 			mdlCiudades.removeRow(i);
 			i -= 1;

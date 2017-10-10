@@ -31,7 +31,7 @@ public class frmAddConexion extends JFrame {
 	private JTextField txtCostoKm;
 	private JTextField txtCostoPlus;
 	private JTextField txtCostoPciasDif;
-	private double km = 0;
+	private static double km = 0;
 	@SuppressWarnings("unused")
 	private double costoTotal = 0;
 	private boolean pciasDistintas = false;
@@ -65,15 +65,42 @@ public class frmAddConexion extends JFrame {
 		final JComboBox<String> cmbConexion1 = new JComboBox<String>();
 		final JComboBox<String> cmbConexion2 = new JComboBox<String>();
 		JButton btnOk = new JButton("Agregar Conexi\u00F3n");
+		
+		
 		btnOk.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int selec1 = cmbConexion1.getSelectedIndex();
 				int selec2 = cmbConexion2.getSelectedIndex();
-				MainGui.dibujarAristas(lista.get(selec1),lista.get(selec2));
+				frmMain.dibujarAristas(lista.get(selec1),lista.get(selec2));
+				frmMain.mostrarConexiones(lista.get(selec1),lista.get(selec2), km, costoTotal);
 				dispose();
 			}
 		});
+		
+				JLabel lblCf200km = new JLabel("<html>Costo Fijo por conexi\u00F3n <br>de mas de 200 km:</html>");
+				lblCf200km.setAlignmentX(Component.CENTER_ALIGNMENT);
+				lblCf200km.setVerticalTextPosition(SwingConstants.TOP);
+				lblCf200km.setVerticalAlignment(SwingConstants.TOP);
+				lblCf200km.setBounds(10, 194, 166, 39);
+				contentPane.add(lblCf200km);
+		
+				lblCostoTotal = new JLabel("Costo Total: ");
+				lblCostoTotal.setHorizontalAlignment(SwingConstants.CENTER);
+				lblCostoTotal.setForeground(Color.RED);
+				lblCostoTotal.setFont(new Font("Tahoma", Font.BOLD, 11));
+				lblCostoTotal.setBounds(0, 244, 445, 20);
+				contentPane.add(lblCostoTotal);
+		
+				JLabel lblConexin = new JLabel("Conexi\u00F3n 2");
+				lblConexin.setBounds(10, 42, 117, 20);
+				contentPane.add(lblConexin);
+		
+				final JLabel lblDistancia = new JLabel("Distancia entre ciudades:");
+				lblDistancia.setForeground(Color.RED);
+				lblDistancia.setFont(new Font("Tahoma", Font.BOLD, 11));
+				lblDistancia.setBounds(10, 72, 370, 20);
+				contentPane.add(lblDistancia);
 		btnOk.setBounds(77, 286, 127, 56);
 		contentPane.add(btnOk);
 
@@ -127,32 +154,8 @@ public class frmAddConexion extends JFrame {
 		txtCostoPciasDif.setBounds(180, 146, 86, 20);
 		contentPane.add(txtCostoPciasDif);
 
-		JLabel lblConexin = new JLabel("Conexi\u00F3n 2");
-		lblConexin.setBounds(10, 42, 117, 20);
-		contentPane.add(lblConexin);
-
-		JLabel lblNewLabel = new JLabel("<html>Costo Fijo por conexi\u00F3n <br>de mas de 200 km:</html>");
-		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblNewLabel.setVerticalTextPosition(SwingConstants.TOP);
-		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setBounds(10, 194, 166, 39);
-		contentPane.add(lblNewLabel);
-
-		final JLabel lblDistancia = new JLabel("Distancia entre ciudades:");
-		lblDistancia.setForeground(Color.RED);
-		lblDistancia.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblDistancia.setBounds(10, 72, 370, 20);
-		contentPane.add(lblDistancia);
-
 		cmbConexion1.setBounds(180, 11, 200, 20);
 		contentPane.add(cmbConexion1);
-
-		lblCostoTotal = new JLabel("Costo Total: ");
-		lblCostoTotal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCostoTotal.setForeground(Color.RED);
-		lblCostoTotal.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCostoTotal.setBounds(0, 244, 445, 20);
-		contentPane.add(lblCostoTotal);
 		cmbConexion1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getSource() == cmbConexion1) {
